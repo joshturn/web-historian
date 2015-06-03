@@ -13,6 +13,14 @@ exports.handleRequest = function (req, res) {
         helpers.sendResponse(res, data, 200);
       }
     });
+  } else {
+    fs.readFile(path.join(archive.paths.archivedSites, req.url), function(err,data) {
+      if (err) {
+        helpers.sendResponse(res, null, err);
+      } else {
+        helpers.sendResponse(res, data, 200);
+      }
+    });
   }
   // res.end(archive.paths.list);
 };
