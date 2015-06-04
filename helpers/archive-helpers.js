@@ -32,7 +32,7 @@ exports.readListOfUrls = function(callback){
     } else {
       return callback(data.toString().split("\n"));
     }
-  })
+  });
 };
 
 exports.isUrlInList = function(url, callback){
@@ -46,7 +46,7 @@ exports.addUrlToList = function(url){
     if (!isTrue) {
       fs.appendFile(paths.list, url + '\n');
     }
-  })
+  });
 };
 
 exports.isURLArchived = function(){

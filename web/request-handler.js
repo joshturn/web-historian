@@ -6,7 +6,7 @@ var fs = require('fs');
 
 exports.handleRequest = function (req, res) {
   if (req.method === "GET" && req.url === "/") {
-    fs.readFile('/Users/student/2015-05-web-historian/web/public/index.html', function(err, data){
+    fs.readFile(path.join(archive.paths.siteAssets, '/index.html'), function(err, data){
       if (err) {
         helpers.sendResponse(res, null, err);
       } else {
@@ -22,7 +22,7 @@ exports.handleRequest = function (req, res) {
       }
     });
   } else if (req.method === "POST") {
-    fs.readFile('/Users/student/2015-05-web-historian/web/public/loading.html', function(err, data) {
+    fs.readFile(path.join(archive.paths.siteAssets, '/loading.html'), function(err, data) {
 
       if (err) {
         helpers.sendResponse(res, null, err);
