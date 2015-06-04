@@ -22,10 +22,11 @@ exports.handleRequest = function (req, res) {
       }
     });
   } else if (req.method === "POST") {
+    console.log('Got a POST request!');
     fs.readFile(path.join(archive.paths.siteAssets, '/loading.html'), function(err, data) {
 
       if (err) {
-        helpers.sendResponse(res, null, err);
+        helpers.sendResponse(res, null, 404);
       } else {
         var dataString = '';
 
@@ -34,9 +35,8 @@ exports.handleRequest = function (req, res) {
         });
 
         req.on('end', function(){
+          dataString = dataString.slice(4);
           archive.addUrlToList(dataString);
-
-          archive.downloadUrls(dataString);
           helpers.sendResponse(res, data, 302);
         });
       }

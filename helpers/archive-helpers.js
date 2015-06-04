@@ -55,9 +55,9 @@ exports.isURLArchived = function(url, callback){
 
 };
 
-exports.downloadUrls = function(url){
+exports.downloadUrls = function(urls){
 
-  var htmlData = function(html) {
+  var htmlData = function(html, url) {
 
     fs.writeFile(path.join(paths.archivedSites, url + ".html"), html, function(err){
       if (err) console.log(err);
@@ -65,13 +65,16 @@ exports.downloadUrls = function(url){
     });
   };
 
-  request("http://" + url, function(err, res, body){
-    if (!err) {
-      htmlData(body);
-    } else {
-      console.log(err);
-    }
-    });
+  _.each(urls, function(url){
+
+    request("http://" + url, function(err, res, body){
+      if (!err) {
+        htmlData(body, url);
+      } else {
+        console.log(err);
+      }
+      });
+  });
 
 };
 
