@@ -31,8 +31,6 @@ describe("Node Server Request Listener Function", function() {
     waitForThen(
       function() { return res._ended; },
       function(){
-        console.log("THE RESPONSE CODE IS", res._responseCode);
-        console.log(res._data.toString().match(/<input/));
         expect(res._responseCode).to.equal(200);
         expect(res._data.toString().match(/<input/)).to.be.ok; // the resulting html should have an input tag
         done();
@@ -79,6 +77,8 @@ describe("Node Server Request Listener Function", function() {
       function(){
         var fileContents = fs.readFileSync(archive.paths.list, 'utf8');
         expect(res._responseCode).to.equal(302);
+        // console.log("THIS IS THE RESPONSE CODE: ", res._responseCode);
+        // console.log("THIS IS THE FILE CONTENTS: ", fileContents);
         expect(fileContents).to.equal(url + "\n");
         done();
     });

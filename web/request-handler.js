@@ -13,12 +13,36 @@ exports.handleRequest = function (req, res) {
         helpers.sendResponse(res, data, 200);
       }
     });
-  } else {
-    fs.readFile(path.join(archive.paths.archivedSites, req.url), function(err,data) {
+  } else if (req.method === "GET") {
+    fs.readFile(path.join(archive.paths.archivedSites, req.url), function(err, data) {
+      if (err) {
+        helpers.sendResponse(res, null, 404);
+      } else {
+        helpers.sendResponse(res, data, 200);
+      }
+    });
+  } else if (req.method === "POST") {
+    fs.readFile('/Users/student/2015-05-web-historian/web/public/loading.html', function(err, data) {
       if (err) {
         helpers.sendResponse(res, null, err);
       } else {
-        helpers.sendResponse(res, data, 200);
+        var dataString = '';
+
+        req.on('data', function(data){
+          dataString += data;
+        });
+
+        req.on('end', function(){
+          // console.log(dataString);
+          fs.writeFile('/Users/student/2015-05-web-historian/archives/sites.txt', dataString, function(err){
+            if (err) {
+              console.log(err);
+            } else {
+              helpers.sendResponse(res, data, 302);
+            }
+          });
+        });
+
       }
     });
   }
