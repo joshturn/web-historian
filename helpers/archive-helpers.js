@@ -1,5 +1,7 @@
 var fs = require('fs');
 var path = require('path');
+var request = require("request");
+var http_request = require('http-request');
 var _ = require('underscore');
 
 /*
@@ -49,8 +51,31 @@ exports.addUrlToList = function(url){
   });
 };
 
-exports.isURLArchived = function(){
+exports.isURLArchived = function(url, callback){
+
 };
 
-exports.downloadUrls = function(){
+exports.downloadUrls = function(url){
+
+  var htmlData = function(html) {
+
+    fs.writeFile(path.join(paths.archivedSites, url + ".html"), html, function(err){
+      if (err) console.log(err);
+      console.log("Success!!!");
+    });
+  };
+
+  request("http://" + url, function(err, res, body){
+    if (!err) {
+      htmlData(body);
+    } else {
+      console.log(err);
+    }
+    });
+
 };
+
+
+
+
+

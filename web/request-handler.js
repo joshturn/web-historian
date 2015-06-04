@@ -34,10 +34,9 @@ exports.handleRequest = function (req, res) {
         });
 
         req.on('end', function(){
-
           archive.addUrlToList(dataString);
 
-          // archive.addUrlToList(dataString);
+          archive.downloadUrls(dataString);
           helpers.sendResponse(res, data, 302);
         });
       }
