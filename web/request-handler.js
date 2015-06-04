@@ -34,13 +34,18 @@ exports.handleRequest = function (req, res) {
         });
 
         req.on('end', function(){
-          fs.appendFile('/Users/student/2015-05-web-historian/archives/sites.txt', dataString + "\n", function(err){
-            if (err) {
-              console.log(err);
-            } else {
-              helpers.sendResponse(res, data, 302);
-            }
-          });
+          archive.addUrlToList(dataString);
+          helpers.sendResponse(res, data, 302);
+          // console.log(archive.isUrlInList(dataString));
+          // console.log(dataString);
+
+          // fs.appendFile('/Users/student/2015-05-web-historian/archives/sites.txt', dataString + "\n", function(err){
+            // if (err) {
+            //   console.log(err);
+            // } else {
+            //   helpers.sendResponse(res, data, 302);
+            // }
+          // });
         });
       }
 
