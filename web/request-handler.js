@@ -23,6 +23,7 @@ exports.handleRequest = function (req, res) {
     });
   } else if (req.method === "POST") {
     fs.readFile('/Users/student/2015-05-web-historian/web/public/loading.html', function(err, data) {
+
       if (err) {
         helpers.sendResponse(res, null, err);
       } else {
@@ -33,8 +34,7 @@ exports.handleRequest = function (req, res) {
         });
 
         req.on('end', function(){
-          // console.log(dataString);
-          fs.writeFile('/Users/student/2015-05-web-historian/archives/sites.txt', dataString, function(err){
+          fs.appendFile('/Users/student/2015-05-web-historian/archives/sites.txt', dataString + "\n", function(err){
             if (err) {
               console.log(err);
             } else {
@@ -42,8 +42,8 @@ exports.handleRequest = function (req, res) {
             }
           });
         });
-
       }
+
     });
   }
   // res.end(archive.paths.list);
